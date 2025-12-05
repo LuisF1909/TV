@@ -2,11 +2,19 @@
 package com.example.nefis
 
 import android.content.Context
+import android.net.Uri
 
 object DataRepository {
 
     fun getLocalUri(context: Context, resId: Int): String {
-        return "android.resource://${context.packageName}/$resId"
+        val resources = context.resources
+        return Uri.Builder()
+            .scheme("android.resource")
+            .authority(resources.getResourcePackageName(resId))
+            .appendPath(resources.getResourceTypeName(resId))
+            .appendPath(resources.getResourceEntryName(resId))
+            .build()
+            .toString()
     }
 
     fun getVideos(context: Context): List<Video> {
@@ -71,4 +79,3 @@ object DataRepository {
 }
 
 data class Category(val name: String, val videos: List<Video>)
-

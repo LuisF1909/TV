@@ -3,6 +3,7 @@ package com.example.nefis
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
@@ -21,6 +22,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
 
 class MainActivity2 : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,8 +52,15 @@ fun VideoRow(videos: List<Video>) {
     val context = LocalContext.current
     LazyRow(contentPadding = PaddingValues(horizontal = 8.dp)) {
         items(videos) { video ->
+            val imageRequest = ImageRequest.Builder(context)
+                .data(video.imageUri)
+                .listener(onError = { _, result ->
+                    Log.e("MainActivity2", "Error loading image: ${video.imageUri}", result.throwable)
+                })
+                .build()
+
             AsyncImage(
-                model = video.imageUri,
+                model = imageRequest,
                 contentDescription = null,
                 modifier = Modifier
                     .padding(4.dp)
