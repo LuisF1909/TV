@@ -1,0 +1,7 @@
+<resources>
+    <style name="Theme.Nefis" parent="@style/Theme.Leanback" >
+        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+        <item name="android:windowAllowReturnTransitionOverlap">true</item>
+        <item name="android:colorPrimary">#25A5C8</item>
+    </style>
+</resources>
